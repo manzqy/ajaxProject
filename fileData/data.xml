@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding='utf-8' ?>
+<root>
+<array>
+    <person>
+        <ID>1</ID>
+        <name>狗蛋</name>
+        <gender>男</gender>
+    </person>
+    <person>
+        <ID>2</ID>
+        <name>翠花</name>
+        <gender>女</gender>
+    </person>
+</array>
+</root>

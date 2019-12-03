@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" enctype="application/x-www-form-urlencoded"></form>
+</body>
+<script>
+    var xhr = new XMLHttpRequest();
+    xhr.open('post', 'http://127.0.0.1:8080/doRegister');
+    xhr.setRequestHeader('content-Type', 'application/x-www-form-urlencoded');
+    xhr.send('userName=xikkk&password=1257&phone=13568741275');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText);
+        }
+    }
+</script>
+</html>
