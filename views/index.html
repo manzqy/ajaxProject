@@ -1,46 +1,58 @@
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hero - Admin</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css" />
+    <style>
+      .hero-list img {
+        width: 50px;
+        height: 50px;
+        display: block;
+      }
 
-<head>
-  <meta charset="UTF-8">
-  <title>Hero - Admin</title>
-  <link rel="stylesheet" href="../static/css/bootstrap.css">
-  <style>
-    .hero-list img {
-      width: 50px;
-      height: 50px;
-      display: block
-    }
+      .hero-list td {
+        height: 50px;
+        line-height: 50px;
+      }
+    </style>
+  </head>
 
-    .hero-list td {
-      height: 50px;
-      line-height: 50px;
-    }
-  </style>
-</head>
+  <body>
+    <header>
+      <div class="page-header container">
+        <h1>王者荣耀 <small>英雄管理器</small></h1>
 
-<body>
-  <header>
-    <div class="page-header container">
-      <h1>王者荣耀 <small>英雄管理器</small></h1>
-      
-      <a href="javascript:void(0);" class="btn btn-exit btn-primary" hidden  style='float:right;'>退出</a>
-      <a href="login.html" class="btn btn-login btn-success" style='float:right'>登录</a>
-    </div>
-  </header>
-  <div class="container hero-list">
-    <a class="btn btn-add btn-success pull-right" hidden href="./add.html">添加英雄</a>
-    <table class="table table-hover" hidden>
-      <thead>
-        <tr>
-          <th>编号</th>
-          <th>名称</th>
-          <th>性别</th>
-          <th>头像</th>
-          <th>操作</th>
-        </tr>
-      </thead>
-      <tbody id="tbody">
-        <!-- <tr>
+        <a
+          href="javascript:void(0);"
+          class="btn btn-exit btn-primary"
+          hidden
+          style="float:right;"
+          >退出</a
+        >
+        <a
+          href="login.html"
+          class="btn btn-login btn-success"
+          style="float:right"
+          >登录</a
+        >
+      </div>
+    </header>
+    <div class="container hero-list">
+      <a class="btn btn-add btn-success pull-right" hidden href="./add.html"
+        >添加英雄</a
+      >
+      <table class="table table-hover" hidden>
+        <thead>
+          <tr>
+            <th>编号</th>
+            <th>名称</th>
+            <th>性别</th>
+            <th>头像</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <!-- <tr>
           <td>1</td>
           <td>狗蛋</td>
           <td>男</td>
@@ -49,34 +61,58 @@
             <a data-id="1" href="javscript:void(0);">删除</a>
           </td>
         </tr> -->
-      </tbody>
-    </table>
-  </div>
-   
-  <!-- Modal -->
-  <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="modelId"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="modelTitleId"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title">提示</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        <div class="modal-body">
-          <div class="container-fluid">
-            你确定要删除吗？
+            <h5 class="modal-title">提示</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-          <button type="button" class="btn btn-primary btn-sure-del" data-id="null">确定</button>
+          <div class="modal-body">
+            <div class="container-fluid">
+              你确定要删除吗？
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              取消
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary btn-sure-del okBtn"
+              data-id="null"
+            >
+              确定
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- 模板引擎 -->
-  <!-- <script type="text/template" id="template">
+    <!-- 模板引擎 -->
+    <!-- <script type="text/template" id="template">
   <% for(var i = 0;i < $data.length;i++) { %>
     <tr>
         <td><%= $data[i].id %></td>
@@ -89,54 +125,78 @@
       </tr>
   <% } %>
   </script> -->
-  <!-- 模板引擎 -->
-  <script type="text/template" id="template">
-  {{ each $data v i }}
-    <tr>
-        <td>{{v.id}}</td>
-        <td>{{v.name}}</td>
-        <td>{{v.gender}}</td>
-        <td><img src="../static/images/{{v.img}}"></td>
-        <td><a href="./edit.html?id=1">修改</a> 
-          <a data-id="1" href="javscript:void(0);">删除</a>
-        </td>
-      </tr>
-  {{ /each }}
+    <!-- 模板引擎 -->
+    <script type="text/template" id="template">
+      {{ each $data v i }}
+        <tr>
+            <td>{{v.id}}</td>
+            <td>{{v.name}}</td>
+            <td>{{v.gender}}</td>
+            <td><img src="../static/images/{{v.img}}"></td>
+            <td><a href="./edit.html?id=1">修改</a>
+              <a data-id="{{v.id}}" href="javscript:void(0);" id="del">删除</a>
+            </td>
+          </tr>
+      {{ /each }}
+    </script>
+  </body>
+  <script src="../static/js/jquery.js"></script>
+  <script src="../static/js/bootstrap.js"></script>
+  <script src="../static/js/template-web.js"></script>
+  <script>
+    $(function() {
+      let status = "common";
+      let dom = null;
+      let index;
+      let id = localStorage.getItem("userId");
+      id &&
+        $.ajax({
+          url: "http://127.0.0.1:8080/isLogin",
+          data: {
+            id: id
+          },
+          success: function(res) {
+            if (res.code == 200) {
+              $(".btn-login").hide();
+              $(".btn-exit").removeAttr("hidden");
+              $(".btn-add").removeAttr("hidden");
+            }
+          }
+        });
+      $.ajax({
+        url: "http://127.0.0.1:8080/getAllHero",
+        type: "post",
+        success: function(res) {
+          if (res.code == 200) {
+            let result = template("template", res.data);
+            console.log(result);
+            $("table").removeAttr("hidden");
+            $("#tbody").html(result);
+          }
+        }
+      });
+      $("#tbody").on("click", "#del", function() {
+        index = $(this).attr("data-id");
+        $("#modelId").modal();
+        dom = $(this);
+      });
+      $(".okBtn").on("click", function() {
+        status = "remove";
+        $("#modelId").modal("hide");
+        if (status != "remove") return;
+        $.ajax({
+          url: "http://127.0.0.1:8080/deleteHeroById",
+          data: {
+            id: index
+          },
+          success: res => {
+            if (res.code == 200) {
+              dom.parents("tr").remove();
+            }
+          }
+        });
+        status = "common";
+      });
+    });
   </script>
-  
-  
-</body>
-<script src="../static/js/jquery.js"></script>
-<script src="../static/js/bootstrap.js"></script>
-<script src="../static/js/template-web.js"></script>
-<script>
-$(function() {
-  let id = localStorage.getItem('userId');
-  id && $.ajax({
-    url: 'http://127.0.0.1:8080/isLogin',
-    data: {
-      id :id
-    },
-    success: function(res) {
-      if (res.code == 200) {
-        $(".btn-login").hide();
-        $(".btn-exit").removeAttr("hidden");
-        $(".btn-add").removeAttr("hidden");
-      }
-    }
-  })
-})
-  $.ajax({
-    url: 'http://127.0.0.1:8080/getAllHero',
-    type: 'post',
-    success: function(res) {
-      if (res.code == 200) {
-        let result = template("template", res.data);
-        console.log(result);
-        $("table").removeAttr("hidden");
-        $("#tbody").html(result);
-      }
-    }
-  })
-</script>
 </html>
