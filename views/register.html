@@ -4,6 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>表单注册</title>
+	<link rel="stylesheet" href="../static/css/bootstrap.css">
 	<style>
 		body {
 			margin: 0;
@@ -133,6 +134,112 @@
 	<div class="tips">
 		<p></p>
 	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+					<div class="modal-header">
+							<h5 class="modal-title">提示：</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+						</div>
+				<div class="modal-body">
+					<div class="container-fluid foo">
+						用户名不能为空
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary okBtn">Sure</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
-
+<script src="../static/js/jquery.js"></script>
+<script src="../static/js/bootstrap.js"></script>
+<script>
+	$(".name").on("blur", function() {
+		let text = $(this).val();
+		if (text.trim() == '') {
+			$("#modelId").modal();
+			return;
+		}
+		$.ajax({
+			url: 'http://127.0.0.1:8080/isUserNameExist',
+			data: {
+				userName: text
+			},
+			success: function(res) {
+				if (res.code != 200) {
+					$(".foo").text("用户名已使用");
+					$("#modelId").modal();
+				}
+			}
+		})
+	})
+	$(".repass").on("blur", function() {
+		let text = $(this).val();
+		let oldText = $(".pass").val();
+		if (text !== oldText) {
+			$(".foo").text("密码不一致");
+			$("#modelId").modal();
+			$(this).val('');
+		}
+	})
+	$(".mobile").on("blur", function() {
+		let text = $(this).val();
+		let reg = /^[1]\d{10}$/;
+		if (!reg.test(text)) {
+			$(".foo").text("请输入有效手机号");
+			$("#modelId").modal();
+			$(this).val('');
+		}
+	})
+	$(".verify").on("click", function() {
+		let text = $(".mobile").val();
+		let reg = /^[1]\d{10}$/;
+		if (reg.test(text)) {
+			$.ajax({
+				url: 'http://127.0.0.1:8080/getCodeWithoutPhone',
+				success: function(res) {
+					$(".code").val(res.code);
+				}
+			})
+		}
+	})
+	$(".submit").on("click", function() {
+		let name = $(".name").val();
+		let password = $(".pass").val();
+		let phone = $(".mobile").val();
+		let code = $('.code').val();
+		if (!(name.trim() && password.trim() && phone.trim() && code.trim())) {
+			$(".foo").text("请填写全部内容");
+			$("#modelId").modal();
+			return;
+		} 
+		$.ajax({
+			url: 'http://127.0.0.1:8080/doRegister',
+			type: 'post',
+			data: {
+				userName: name,
+				password: password,
+				phone: phone
+			},
+			success: function(res) {
+				if (res.code == 200) {
+					$(".foo").text("恭喜你注册成功，马上为你跳转中...");
+					$("#modelId").modal();
+					setTimeout(function() {
+						location.href = './login.html';
+					},3000)
+				}
+			}
+		})
+	})
+	$(".okBtn").on("click", function() {
+		$("#modelId").modal('hide');
+	})
+</script>
 </html>
