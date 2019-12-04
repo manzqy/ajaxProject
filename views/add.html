@@ -61,17 +61,73 @@
                                 </button>
                         </div>
                 <div class="modal-body">
-                    <div class="container-fluid">
+                    <div class="container-fluid msg">
                         新增成功，稍后为您自动跳转
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">确认</button>
+                    <button type="button" class="btn btn-secondary okBtn" data-dismiss="modal">确认</button>
                 </div>
             </div>
         </div>
     </div>
     
 </body>
-
+<script src="../static/js/jquery.js"></script>
+<script src="../static/js/bootstrap.js"></script>
+<script>
+    let status = 'common';
+    $("#img").on("change", function() {
+        let file = this.files[0];
+        let fd = new FormData();
+        fd.append('pic', file);
+        $.ajax({
+            url: 'http://127.0.0.1:8080/uploadHeadImg',
+            type: 'post',
+            processData: false,
+            contentType: false,
+            data: fd,
+            success: function(res) {
+                if (res.code == 200) {
+                    $("#photo").attr('src', res.baseDir + res.filePath);
+                    $("#headSrc").val(res.filePath);
+                }
+            }
+        })
+    })
+    $("#sub").on("click", function() {
+        let name = $("input[type=text]").val();
+        if (!name.trim()) {
+            $(".msg").text('请输入姓名');
+            $("#modelId").modal();
+            return;
+        }
+        let data = $("#myform").serialize();
+        console.log(data);
+        $.ajax({
+            url: 'http://127.0.0.1:8080/addNewHero',
+            type: 'post',
+            data: data,
+            success: function(res) {
+                if (res.code == 200) {
+                    $(".msg").text('添加成功，正在跳转中...');
+                    $("#modelId").modal();
+                    status = 'login';
+                    setTimeout(function(){
+                        location.href = './index.html';
+                    },2000)
+                }
+            }
+        })
+        $(".okBtn").on("click", function() {
+            if (status == 'common') {
+                $("#modelId").modal('hide');
+                return;
+            }
+            if (status == 'login') {
+                location.href = './index.html';
+            }
+        })
+    })
+</script>
 </html>
