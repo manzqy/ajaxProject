@@ -75,9 +75,54 @@
       </div>
     </div>
   </div>
-  
-  
+  <!-- 模板引擎 -->
+  <script type="text/template" id="template">
+  <% for(var i = 0;i < $data.length;i++) { %>
+    <tr>
+        <td><%= $data[i].id %></td>
+        <td><%= $data[i].name %></td>
+        <td><%= $data[i].gender %></td>
+        <td><img src="../static/images/<%= $data[i].img %>"></td>
+        <td><a href="./edit.html?id=1">修改</a> 
+          <a data-id="1" href="javscript:void(0);">删除</a>
+        </td>
+      </tr>
+  <% } %>
   </script>
+  
+  
 </body>
-
+<script src="../static/js/jquery.js"></script>
+<script src="../static/js/bootstrap.js"></script>
+<script src="../static/js/template-web.js"></script>
+<script>
+$(function() {
+  let id = localStorage.getItem('userId');
+  id && $.ajax({
+    url: 'http://127.0.0.1:8080/isLogin',
+    data: {
+      id :id
+    },
+    success: function(res) {
+      if (res.code == 200) {
+        $(".btn-login").hide();
+        $(".btn-exit").removeAttr("hidden");
+        $(".btn-add").removeAttr("hidden");
+      }
+    }
+  })
+})
+  $.ajax({
+    url: 'http://127.0.0.1:8080/getAllHero',
+    type: 'post',
+    success: function(res) {
+      if (res.code == 200) {
+        let result = template("template", res.data);
+        console.log(result);
+        $("table").removeAttr("hidden");
+        $("#tbody").html(result);
+      }
+    }
+  })
+</script>
 </html>
