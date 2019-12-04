@@ -76,7 +76,7 @@
     </div>
   </div>
   <!-- 模板引擎 -->
-  <script type="text/template" id="template">
+  <!-- <script type="text/template" id="template">
   <% for(var i = 0;i < $data.length;i++) { %>
     <tr>
         <td><%= $data[i].id %></td>
@@ -88,6 +88,20 @@
         </td>
       </tr>
   <% } %>
+  </script> -->
+  <!-- 模板引擎 -->
+  <script type="text/template" id="template">
+  {{ each $data v i }}
+    <tr>
+        <td>{{v.id}}</td>
+        <td>{{v.name}}</td>
+        <td>{{v.gender}}</td>
+        <td><img src="../static/images/{{v.img}}"></td>
+        <td><a href="./edit.html?id=1">修改</a> 
+          <a data-id="1" href="javscript:void(0);">删除</a>
+        </td>
+      </tr>
+  {{ /each }}
   </script>
   
   
