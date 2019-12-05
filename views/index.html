@@ -133,7 +133,7 @@
             <td>{{v.name}}</td>
             <td>{{v.gender}}</td>
             <td><img src="../static/images/{{v.img}}"></td>
-            <td><a href="./edit.html?id=1">修改</a>
+            <td><a href="./edit.html?id={{v.id}}">修改</a>
               <a data-id="{{v.id}}" href="javscript:void(0);" id="del">删除</a>
             </td>
           </tr>
@@ -149,6 +149,7 @@
       let dom = null;
       let index;
       let id = localStorage.getItem("userId");
+      $(".btn-add").removeAttr('hidden');
       id &&
         $.ajax({
           url: "http://127.0.0.1:8080/isLogin",
